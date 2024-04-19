@@ -1,0 +1,12 @@
+EXPLICATION SUR LES WIDGETS ET LES DETAILS :
+LE BUILD ES WIDGETS SERT POUR UN RENDU DE LA PAGE C'EST A DIRE UN BUTTON ,UNE BARRE ,DES ICONS ...
+
+DIFERENCE ENTRE FINDONEWIDGET ET FINDWIDGET:
+findWidget: Cette méthode recherche tous les widgets qui correspondent au type spécifié. 
+Si aucun widget correspondant n'est trouvé, elle retourne une liste vide. 
+Cette méthode est utile lorsque vous vous attendez à trouver plusieurs widgets du même type dans l'arbre des widgets.
+
+FindOneWidget
+Cette méthode recherche un seul widget correspondant au type spécifié. 
+Si aucun widget correspondant n'est trouvé, elle lance une exception. 
+Cette méthode est utile lorsque vous vous attendez à trouver exactement un seul widget du type spécifié dans l'arbre des widgets.

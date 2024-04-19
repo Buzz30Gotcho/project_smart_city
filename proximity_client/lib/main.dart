@@ -14,7 +14,7 @@ import 'package:proximity_client/domain/user_repository/user_repository.dart';
 import 'package:proximity_client/domain/notification_repository/notification_repository.dart';
 
 import 'proximity_app.dart';
-
+// BOITES AVEC DIFFERENTS NOMS CE SONT DES LISTES DE JOTONS QU'ON POURRA UTILISER SI NECESSIARES 
 void main() async {
   //SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   WidgetsFlutterBinding.ensureInitialized();

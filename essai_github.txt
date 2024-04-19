@@ -1,2 +1,7 @@
 salut c'est une experience sur github et je fait ici d'abort des experimentations avant de le faire sur le vrai projet
 Merci
+Le darktheme est regle OK
+Les tests sont en train d'etre fait 
+Le GITHUB/Action ets entrain d'ere fait aussi
+
+

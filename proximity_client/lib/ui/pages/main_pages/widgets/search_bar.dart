@@ -27,8 +27,17 @@ class _SearchBarState extends State<SearchBar> {
     );
   }
 
+
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // BUILD DE RECHERCHE
+    
+  final appLocalizations = AppLocalizations.of(context);
+  final theme = Theme.of(context);
+  if (appLocalizations == null || theme.textTheme.headlineSmall == null || theme.textTheme.bodyMedium == null) {
+    // Gérer le cas où l'une des valeurs est nulle
+  return Container(); // Ou tout autre widget de remplacement
+  }
     return GestureDetector(
       onTap: _showSearch,
       child: Container(
@@ -60,7 +69,7 @@ class _SearchBarState extends State<SearchBar> {
 }
 
 /// A custom search delegate for proper handling and custom UI
-class Search extends CustomSearchDelegate<Product> {
+class Search extends CustomSearchDelegate<Product> { // GERE LA RECHERCHE ET AFFICHE LES RESULTATS
   @override
   Widget buildResults(BuildContext context) {
     final productService = Provider.of<ProductService>(context);

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:proximity_client/ui/pages/main_pages/widgets/single_select.dart';
-
+/*
+cette classe fournit une boîte de dialogue réutilisable pour sélectionner 
+un élément parmi une liste, avec des fonctionnalités de recherche et de personnalisation avancées.
+*/ 
 /// Contains common actions that are used by different Single select classes.
 class SingleSelectActions<T> {
   T? onItemCheckedChange(T? selectedValue, T itemValue, bool checked) {

@@ -62,6 +62,21 @@ class _MainScreenState extends State<MainScreen> {
       });
     }
 
+
+
+      // Utilisation de Future.delayed pour simuler une attente de 2 secondes
+  Future.delayed(const Duration(seconds: 2), () {
+    if (_debugLabelString != "") {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        handleNotification(notification, notificationService, parentContext);
+        setState(() {
+          _debugLabelString = "";
+        });
+      });
+    }
+  });
+
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(

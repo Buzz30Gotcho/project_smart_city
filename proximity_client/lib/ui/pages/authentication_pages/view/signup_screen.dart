@@ -34,9 +34,9 @@ class SignupScreen extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis),
                     const Text('fields with * are mandatory',
-                        style: TextStyle(fontSize: 10)),
+                        style: TextStyle(fontSize: 11)),
                     const Text('you must at least one enter the email or the phone',
-                        style: TextStyle(fontSize: 10))
+                        style: TextStyle(fontSize: 11))
                   ])),
               const SizedBox(height: small_100),
 
