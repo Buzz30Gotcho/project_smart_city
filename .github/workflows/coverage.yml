@@ -1,0 +1,41 @@
+# Define a workflow to generate coverage report and upload to codecov
+name: Coverage
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Install Flutter
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5'  # Specify your Flutter version here
+
+      # Run tests and generate coverage report
+      - name: Run tests and generate coverage report
+        run: |
+          flutter test --coverage
+
+      # Clean coverage report
+      - name: Clean coverage report  
+        run: |
+          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+      - name: Tell me a secret
+        run:  echo " My existing secret is ${{secrets.CODECOV_TOKEN }} "
+        
+      # Upload coverage report to codecov
+      - name: Upload coverage report to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/lcov.cleaned.info
