@@ -27,11 +27,14 @@ jobs:
 
       # Install lcov
       - name: Install lcov
-        if: runner.os == 'Linux' || runner.os == 'macOS'
         run: |
-          if [ "$runner.os" = "Linux" ]; then
-            sudo apt-get install -y lcov
-          elif [ "$runner.os" = "macOS" ]; then
+          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+            sudo apt-get update
+            sudo apt-get install lcov
+          elif [ "${{ matrix.os }}" == "windows-latest" ]; then
+            choco install lcov
+          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
+            brew update
             brew install lcov
           fi
 
