@@ -25,18 +25,22 @@ jobs:
         with:
           flutter-version: '3.19.5'  # Specify your Flutter version here
 
-      # Install lcov
+      # Install lcov (for Linux and macOS)
       - name: Install lcov
+        if: runner.os == 'Linux' || runner.os == 'macOS'
         run: |
-          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            sudo apt-get update
-            sudo apt-get install lcov
-          elif [ "${{ matrix.os }}" == "windows-latest" ]; then
-            choco install lcov
-          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-            brew update
+          if [ "$runner.os" = "Linux" ]; then
+            sudo apt-get install -y lcov
+          elif [ "$runner.os" = "macOS" ]; then
             brew install lcov
           fi
+      
+      # Install lcov (for Windows)
+      - name: Install lcov
+        if: runner.os == 'Windows'
+        run: |
+          choco install lcov
+
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
