@@ -30,7 +30,10 @@ jobs:
         run: |
           cd proximity_client  # Change directory to proximity_client
           flutter test --coverage  test/
-
+      # secret 
+      - name: Tell me a secret
+        run:  echo " My existing secret is ${{secrets.CODECOV_TOKEN }} "
+        
       # Clean coverage report
       - name: Clean coverage report  
         run: |
