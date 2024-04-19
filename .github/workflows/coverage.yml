@@ -34,6 +34,7 @@ jobs:
       # Clean coverage report
       - name: Clean coverage report  
         run: |
+          cd proximity_client
           lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
         
       # Upload coverage report to codecov
