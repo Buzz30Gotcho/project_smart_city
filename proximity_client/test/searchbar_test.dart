@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 import 'package:proximity/icons/proximity_icons.dart';
 import 'package:proximity_client/proximity_app.dart';
 import 'package:proximity_client/ui/pages/main_pages/widgets/search_bar.dart' as CustomSearchBar; // Renommer l'importation pour éviter les conflits de noms
