@@ -17,7 +17,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}   # runs on ubuntu-latest, windows-latest, macos-latest
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
@@ -27,6 +27,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it/ EN GROS RECUPERE TOUTE LES DEPENDENCES AUQUEL TON FICHIER A BESOIN -FONCTIONS DE GITHUB/ACTION
       - uses: actions/checkout@v3
+      # secret create for the tests 
+      - name: Tell me a secret
+        run:  echo " My existing secret is ${{secrets.CODECOV_TOKEN }} "
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
