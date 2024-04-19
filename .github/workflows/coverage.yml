@@ -15,25 +15,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Install Flutter
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5'  # Specify your Flutter version here
+
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
-        run: flutter test --coverage
+        run: |
+          flutter test --coverage
 
       # Clean coverage report
       - name: Clean coverage report  
-        run: lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
-
-      # Print information about the GitHub repository
-      - name: GitHub repository information
-        run: echo "My GitHub repository is called ${{ github.repository }}"
-        
-      # Print the secret to verify it is accessible
+        run: |
+          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
       - name: Tell me a secret
-        run: echo "My existing secret is ${{ secrets.CODECOV_TOKEN }}"
+        run:  echo " My existing secret is ${{secrets.CODECOV_TOKEN }} "
         
       # Upload coverage report to codecov
       - name: Upload coverage report to codecov
         uses: codecov/codecov-action@v2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ CODECOV_TOKEN.CODECOV_TOKEN }}
           file: ./coverage/lcov.cleaned.info
