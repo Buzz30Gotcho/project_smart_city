@@ -31,8 +31,6 @@ jobs:
       - name: Clean coverage report  
         run: |
           lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
-      - name: Tell me a secret
-        run:  echo " My existing secret is ${{secrets.CODECOV_TOKEN }} "
         
       # Upload coverage report to codecov
       - name: Upload coverage report to codecov
