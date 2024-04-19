@@ -14,24 +14,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: github stuff
-        uses: echo " my github repo is called ${{github.repository}} "
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
-        run: |
-          flutter test --coverage
+        run: flutter test --coverage
 
       # Clean coverage report
       - name: Clean coverage report  
-        run: |
-          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+        run: lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+
+      # Print information about the GitHub repository
+      - name: GitHub repository information
+        run: echo "My GitHub repository is called ${{ github.repository }}"
+        
+      # Print the secret to verify it is accessible
       - name: Tell me a secret
-        run:  echo " My existing secret is ${{secrets.CODECOV_TOKEN }} "
+        run: echo "My existing secret is ${{ secrets.CODECOV_TOKEN }}"
         
       # Upload coverage report to codecov
       - name: Upload coverage report to codecov
         uses: codecov/codecov-action@v2
         with:
-          token: ${{ CODECOV_TOKEN.CODECOV_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage/lcov.cleaned.info
