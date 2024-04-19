@@ -21,6 +21,10 @@ jobs:
         with:
           flutter-version: '3.19.5'  # Specify your Flutter version here
 
+      # Install lcov
+      - name: Install lcov
+        run: sudo apt-get install -y lcov
+
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
         run: |
