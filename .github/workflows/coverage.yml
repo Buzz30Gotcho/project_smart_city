@@ -24,7 +24,7 @@ jobs:
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
         run: |
-          flutter test --coverage
+          flutter test --coverage  proximity_client/test/
 
       # Clean coverage report
       - name: Clean coverage report  
