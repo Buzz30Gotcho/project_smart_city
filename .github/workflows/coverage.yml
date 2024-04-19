@@ -39,8 +39,17 @@ jobs:
       - name: Install lcov
         if: runner.os == 'Windows'
         run: |
-          choco install lcov
+          # Télécharger l'exécutable lcov depuis GitHub
+          Invoke-WebRequest -Uri "https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15-1.noarch.rpm" -OutFile "lcov-1.15-1.noarch.rpm"
 
+          # Extraire le contenu de l'archive
+          Expand-Archive -Path "lcov-1.15-1.noarch.rpm" -DestinationPath "lcov"
+
+          # Ajouter le répertoire lcov à la variable PATH pour qu'il soit accessible depuis n'importe où dans le workflow
+          $env:PATH += ";$(pwd)/lcov/usr/bin"
+
+          # Vérifier l'installation de lcov
+          lcov --version
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
