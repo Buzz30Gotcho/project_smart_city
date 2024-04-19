@@ -1,31 +1,36 @@
-# This is a basic workflow to help you get started with Actions
+# Define a workflow to generate coverage report and upload to codecov
+name: Coverage
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+  coverage:
+    runs-on: self-hosted
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it/ EN GROS RECUPERE TOUTE LES DEPENDENCE AUQUEL TON FICHIER A BESOIN 
-      - uses: actions/checkout@v3 
+      # Update the checkout action to use the latest version
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # Run tests and generate coverage report
+      - name: Run tests and generate coverage report
+        run: |
+          flutter test --coverage
 
+      # Clean coverage report
+      - name: Clean coverage report  
+        run: |
+          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+      - name: Tell me a secret
+        run:  echo " My existing secret is ${{secrets.CODECOV_TOKEN }} "
+        
+      # Upload coverage report to codecov
+      - name: Upload coverage report to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ CODECOV_TOKEN.CODECOV_TOKEN }}
+          file: ./coverage/lcov.cleaned.info
