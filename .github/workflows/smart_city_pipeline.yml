@@ -27,12 +27,12 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it/ EN GROS RECUPERE TOUTE LES DEPENDENCES AUQUEL TON FICHIER A BESOIN -FONCTIONS DE GITHUB/ACTION
       - uses: actions/checkout@v3
-      # secret create for the tests 
-      - name: Tell me a secret
-        run:  echo " My existing secret is ${{secrets.CODECOV_TOKEN }} "
-
+    
+      - name: Github Stuff
+        run: echo "My Github repo is called ${{github.repository}}"
+      
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
 
-
+  
