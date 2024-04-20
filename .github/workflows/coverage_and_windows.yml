@@ -20,7 +20,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           # Download Perl installer
-          Invoke-WebRequest -Uri "https://strawberryperl.com/" -OutFile "perl_installer.msi"
+          Invoke-WebRequest -Uri "https://strawberryperl.com/" -OutFile "perl_installer"
 
           # Install Perl
           Start-Process -Wait msiexec.exe -ArgumentList '/i', 'perl_installer.msi', '/quiet'
