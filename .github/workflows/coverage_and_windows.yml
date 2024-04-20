@@ -19,13 +19,13 @@ jobs:
       - name: Install Perl
         if: runner.os == 'Windows'
         run: |
-          # Download Perl installer
-          Invoke-WebRequest -Uri "https://strawberryperl.com/" -OutFile "perl_installer"
+          # Télécharger l'installateur Perl
+          Invoke-WebRequest -Uri "https://strawberryperl.com/download/5.34.0.1/strawberry-perl-5.34.0.1-64bit.msi" -OutFile "perl_installer.msi"
 
-          # Install Perl
+          # Installer Perl
           Start-Process -Wait msiexec.exe -ArgumentList '/i', 'perl_installer.msi', '/quiet'
 
-          # Create association for Perl
+          # Créer une association pour Perl
           assoc .perl=Perl.File
           ftype Perl.File=C:\Strawberry\perl\bin\perl.exe "%1" %*
 
@@ -33,30 +33,22 @@ jobs:
       - name: Install lcov
         if: runner.os == 'Windows'
         run: |
-          # Define correct path of GCOV executable in geninfo.perl
-          # (You may need to edit geninfo.perl manually)
-          # Example: $gcov_tool = "C:\\Program Files\\MinGW\\bin\\gcov.exe";
-
-          # Define correct path of Perl executable in lcov.bat
-          # (You may need to edit lcov.bat manually)
-          # Example: set perl=C:\Strawberry\perl\bin\perl.exe
-
-          # Download lcov executable (you may need to replace the URL with a valid one)
+          # Télécharger l'exécutable lcov pour Windows
           Invoke-WebRequest -Uri "https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15-win64.zip" -OutFile "lcov.zip"
 
-          # Extract lcov executable
+          # Extraire l'exécutable lcov
           Expand-Archive -Path "lcov.zip" -DestinationPath "lcov"
 
-          # Add lcov directory to PATH
+          # Ajouter le répertoire lcov à la variable PATH
           $env:PATH += ";$(pwd)/lcov"
 
-          # Check lcov installation
+          # Vérifier l'installation de lcov
           lcov --version
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
         run: |
-          cd proximity_client  # Change directory to proximity_client
+          cd proximity_client  # Changer de répertoire vers proximity_client
           flutter test --coverage test/
 
       # Clean coverage report
