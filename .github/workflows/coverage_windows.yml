@@ -1,0 +1,56 @@
+# Define a workflow to generate coverage report and upload to codecov
+name: Coverage And Test (Windows)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  coverage:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Install Flutter
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5'  # Specify your Flutter version here
+
+      # Install lcov (for Windows)
+      - name: Install lcov
+        run: |
+          # Télécharger l'exécutable lcov depuis GitHub
+          Invoke-WebRequest -Uri "https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15-1.noarch.rpm" -OutFile "lcov-1.15-1.noarch.rpm"
+
+          # Extraire le contenu de l'archive
+          Expand-Archive -Path "lcov-1.15-1.noarch.rpm" -DestinationPath "lcov"
+
+          # Ajouter le répertoire lcov à la variable PATH pour qu'il soit accessible depuis n'importe où dans le workflow
+          $env:PATH += ";$(pwd)/lcov/usr/bin"
+
+          # Vérifier l'installation de lcov
+          lcov --version
+
+      # Run tests and generate coverage report
+      - name: Run tests and generate coverage report
+        run: |
+          cd proximity_client  # Change directory to proximity_client
+          flutter test --coverage  test/
+
+      # Clean coverage report
+      - name: Clean coverage report  
+        run: |
+          cd proximity_client
+          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+        
+      # Upload coverage report to codecov
+      - name: Upload coverage report to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/lcov.cleaned.info
