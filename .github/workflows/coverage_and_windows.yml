@@ -15,27 +15,49 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Install Chocolatey
-      - name: Install Chocolatey
+      # Install Perl
+      - name: Install Perl
         if: runner.os == 'Windows'
         run: |
-          Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+          # Download Perl installer
+          Invoke-WebRequest -Uri "https://strawberryperl.com/download/5.34.0.1/strawberry-perl-5.34.0.1-64bit.msi" -OutFile "perl_installer.msi"
 
-      # Install lcov via Chocolatey
+          # Install Perl
+          Start-Process -Wait msiexec.exe -ArgumentList '/i', 'perl_installer.msi', '/quiet'
+
+          # Create association for Perl
+          assoc .perl=Perl.File
+          ftype Perl.File=C:\Strawberry\perl\bin\perl.exe "%1" %*
+
+      # Install lcov
       - name: Install lcov
         if: runner.os == 'Windows'
-        run: choco install lcov --yes
+        run: |
+          # Define correct path of GCOV executable in geninfo.perl
+          # (You may need to edit geninfo.perl manually)
+          # Example: $gcov_tool = "C:\\Program Files\\MinGW\\bin\\gcov.exe";
 
-      # Verify lcov installation
-      - name: Verify lcov installation
-        if: runner.os == 'Windows'
-        run: lcov --version
+          # Define correct path of Perl executable in lcov.bat
+          # (You may need to edit lcov.bat manually)
+          # Example: set perl=C:\Strawberry\perl\bin\perl.exe
+
+          # Download lcov executable (you may need to replace the URL with a valid one)
+          Invoke-WebRequest -Uri "https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15-win64.zip" -OutFile "lcov.zip"
+
+          # Extract lcov executable
+          Expand-Archive -Path "lcov.zip" -DestinationPath "lcov"
+
+          # Add lcov directory to PATH
+          $env:PATH += ";$(pwd)/lcov"
+
+          # Check lcov installation
+          lcov --version
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
         run: |
           cd proximity_client  # Change directory to proximity_client
-          flutter test --coverage  test/
+          flutter test --coverage test/
 
       # Clean coverage report
       - name: Clean coverage report  
