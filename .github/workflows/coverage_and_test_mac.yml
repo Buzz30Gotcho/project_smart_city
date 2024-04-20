@@ -32,11 +32,12 @@ jobs:
           cd proximity_client  # Change directory to proximity_client
           flutter test --coverage  test/
 
-      # Clean coverage report
+    # Clean coverage report
       - name: Clean coverage report  
         run: |
           cd proximity_client
-          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info --ignore-errors unused
+
         
       # Upload coverage report to codecov
       - name: Upload coverage report to codecov
