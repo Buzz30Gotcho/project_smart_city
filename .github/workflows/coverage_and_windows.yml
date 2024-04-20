@@ -21,25 +21,15 @@ jobs:
         run: |
           Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-      # Install Strawberry Perl via Chocolatey
-      - name: Install Strawberry Perl
-        if: runner.os == 'Windows'
-        run: choco install strawberryperl --yes
-
-      # Verify Strawberry Perl installation
-      - name: Verify Perl installation
-        if: runner.os == 'Windows'
-        run: perl --version
-
-      # Install lcov (for Windows)
+      # Install lcov via Chocolatey
       - name: Install lcov
         if: runner.os == 'Windows'
-        run: |
-          # Télécharger l'exécutable lcov pré-compilé pour Windows depuis une source fiable
-          Invoke-WebRequest -Uri "https://downloads.sourceforge.net/project/ltp/lcov/lcov-1.14/lcov-1.14-1.noarch.rpm" -OutFile "lcov.exe"
-      
-          # Vérifier l'installation de lcov
-          .\lcov.exe --version
+        run: choco install lcov --yes
+
+      # Verify lcov installation
+      - name: Verify lcov installation
+        if: runner.os == 'Windows'
+        run: lcov --version
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
