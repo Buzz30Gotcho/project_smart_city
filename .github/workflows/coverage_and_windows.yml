@@ -23,16 +23,17 @@ jobs:
 
       # Install lcov (for Windows)
       - name: Install lcov
+        if: runner.os == 'Windows'
         run: |
-          # Télécharger l'exécutable lcov depuis GitHub
-          Invoke-WebRequest -Uri "https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15-1.noarch.rpm" -OutFile "lcov-1.15-1.noarch.rpm"
+          # Télécharger l'exécutable lcov pour Windows depuis GitHub
+          Invoke-WebRequest -Uri "https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15-win64.zip" -OutFile "lcov.zip"
 
           # Extraire le contenu de l'archive
-          Expand-Archive -Path "lcov-1.15-1.noarch.rpm" -DestinationPath "lcov"
+          Expand-Archive -Path "lcov.zip" -DestinationPath "lcov"
 
           # Ajouter le répertoire lcov à la variable PATH pour qu'il soit accessible depuis n'importe où dans le workflow
-          $env:PATH += ";$(pwd)/lcov/usr/bin"
-
+          $env:PATH += ";$(pwd)/lcov"
+          
           # Vérifier l'installation de lcov
           lcov --version
 
