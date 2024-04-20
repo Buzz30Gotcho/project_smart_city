@@ -15,27 +15,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Install Flutter
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.5'  # Specify your Flutter version here
-
-      # Install lcov (for Windows)
-      - name: Install lcov
-        if: runner.os == 'Windows'
+      # Install Perl
+      - name: Install Perl
         run: |
-          # Télécharger l'exécutable lcov pour Windows depuis GitHub
-          Invoke-WebRequest -Uri "https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15-win64.zip" -OutFile "lcov.zip"
+          # Download Perl installer
+          Invoke-WebRequest -Uri "https://strawberryperl.com/download/5.34.0.1/strawberry-perl-5.34.0.1-64bit.msi" -OutFile "perl-installer.msi"
 
-          # Extraire le contenu de l'archive
-          Expand-Archive -Path "lcov.zip" -DestinationPath "lcov"
+          # Install Perl silently
+          Start-Process msiexec.exe -ArgumentList "/i", "perl-installer.msi", "/qn" -NoNewWindow -Wait
 
-          # Ajouter le répertoire lcov à la variable PATH pour qu'il soit accessible depuis n'importe où dans le workflow
-          $env:PATH += ";$(pwd)/lcov"
-          
-          # Vérifier l'installation de lcov
-          lcov --version
+          # Add Perl to PATH
+          $env:PATH += ";C:\Strawberry\perl\bin"
+
+      # Define correct path of GCOV executable in geninfo.perl
+      - name: Define GCOV path in geninfo.perl
+        run: |
+          $gcov_tool = "C:\\Program Files\\GCOV\\gcov.exe";
+          (Get-Content -Path "geninfo.perl") -replace 'our \$gcov_tool = "C:\\Program Files\\GCOV\\gcov.exe";', '$gcov_tool = "C:\\Strawberry\\c\\bin\\gcov.exe"' | Set-Content -Path "geninfo.perl"
+
+      # Define correct path of Perl executable in lcov.bat
+      - name: Define Perl path in lcov.bat
+        run: |
+          (Get-Content -Path "lcov.bat") -replace 'set perl=C:\\CORRECT_PATH_TO\\Perl.exe', 'set perl=C:\\Strawberry\\perl\\bin\\perl.exe' | Set-Content -Path "lcov.bat"
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
