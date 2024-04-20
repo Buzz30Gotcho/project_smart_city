@@ -1,5 +1,5 @@
 # Define a workflow to generate coverage report and upload to codecov
-name: Coverage And Test
+name: Coverage And Test (Linux and macOS)
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
       - name: Checkout code
@@ -27,29 +27,12 @@ jobs:
 
       # Install lcov (for Linux and macOS)
       - name: Install lcov
-        if: runner.os == 'Linux' || runner.os == 'macOS'
         run: |
           if [ "$runner.os" = "Linux" ]; then
             sudo apt-get install -y lcov
           elif [ "$runner.os" = "macOS" ]; then
             brew install lcov
           fi
-      
-      # Install lcov (for Windows)
-      - name: Install lcov
-        if: runner.os == 'Windows'
-        run: |
-          # Télécharger l'exécutable lcov depuis GitHub
-          Invoke-WebRequest -Uri "https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15-1.noarch.rpm" -OutFile "lcov-1.15-1.noarch.rpm"
-
-          # Extraire le contenu de l'archive
-          Expand-Archive -Path "lcov-1.15-1.noarch.rpm" -DestinationPath "lcov"
-
-          # Ajouter le répertoire lcov à la variable PATH pour qu'il soit accessible depuis n'importe où dans le workflow
-          $env:PATH += ";$(pwd)/lcov/usr/bin"
-
-          # Vérifier l'installation de lcov
-          lcov --version
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
