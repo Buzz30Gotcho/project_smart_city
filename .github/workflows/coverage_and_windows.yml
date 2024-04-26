@@ -47,8 +47,8 @@ jobs:
       - name: Analyze code with SonarCloud
         run: |
           sonar-scanner \
-            -Dsonar.projectKey=<Your_Project_Key> \
-            -Dsonar.organization=<Your_Organization_Key> \
+            -Dsonar.projectKey=<buzz30gotcho> \
+            -Dsonar.organization=<buzz30gotcho> \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
