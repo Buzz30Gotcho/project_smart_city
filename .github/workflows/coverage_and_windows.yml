@@ -1,5 +1,4 @@
-# Define a workflow to generate coverage report and upload to codecov
-name: Coverage And Test (Windows)
+name: SonarCloud Analysis (Windows)
 
 on:
   push:
@@ -8,58 +7,51 @@ on:
     branches: [ main ]
 
 jobs:
-  coverage:
+  sonarcloud_analysis:
     runs-on: windows-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Install Perl
-      - name: Install Perl
+      # Install SonarScanner
+      - name: Install SonarScanner
         if: runner.os == 'Windows'
         run: |
-          # Télécharger l'installateur Perl
-          Invoke-WebRequest -Uri "https://strawberryperl.com/download/5.34.0.1/strawberry-perl-5.34.0.1-64bit.msi" -OutFile "perl_installer.msi"
+          # Download SonarScanner for Windows
+          Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-windows.zip" -OutFile "sonar-scanner.zip"
+          
+          # Extract SonarScanner
+          Expand-Archive -Path "sonar-scanner.zip" -DestinationPath "sonar-scanner"
+          
+          # Add sonar-scanner\bin directory to PATH
+          $env:PATH += ";$(pwd)/sonar-scanner/bin"
 
-          # Installer Perl
-          Start-Process -Wait msiexec.exe -ArgumentList '/i', 'perl_installer.msi', '/quiet'
-
-          # Créer une association pour Perl
-          assoc .perl=Perl.File
-          ftype Perl.File=C:\Strawberry\perl\bin\perl.exe "%1" %*
-
-      # Install lcov
-      - name: Install lcov
-        if: runner.os == 'Windows'
-        run: |
-          # Télécharger l'exécutable lcov pour Windows
-          Invoke-WebRequest -Uri "https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15-win64.zip" -OutFile "lcov.zip"
-
-          # Extraire l'exécutable lcov
-          Expand-Archive -Path "lcov.zip" -DestinationPath "lcov"
-
-          # Ajouter le répertoire lcov à la variable PATH
-          $env:PATH += ";$(pwd)/lcov"
-
-          # Vérifier l'installation de lcov
-          lcov --version
+          # Verify SonarScanner installation
+          sonar-scanner --version
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
         run: |
-          cd proximity_client  # Changer de répertoire vers proximity_client
+          cd proximity_client  # Change directory to proximity_client
           flutter test --coverage test/
 
-      # Clean coverage report
-      - name: Clean coverage report  
+      # Clean coverage report (if needed)
+      # Note: SonarCloud typically analyzes code without needing to clean coverage reports
+      # - name: Clean coverage report
+      #   run: |
+      #     cd proximity_client
+      #     lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+
+      # Analyze code with SonarCloud
+      - name: Analyze code with SonarCloud
         run: |
-          cd proximity_client
-          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
-        
-      # Upload coverage report to codecov
-      - name: Upload coverage report to codecov
-        uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage/lcov.cleaned.info
+          sonar-scanner \
+            -Dsonar.projectKey=<Your_Project_Key> \
+            -Dsonar.organization=<Your_Organization_Key> \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
+
+      # Note: Replace <Your_Project_Key>, <Your_Organization_Key> and ${{ secrets.SONARCLOUD_TOKEN }} with actual values
+
