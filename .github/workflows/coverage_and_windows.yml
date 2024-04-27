@@ -18,13 +18,22 @@ jobs:
       - name: Install SonarScanner
         if: runner.os == 'Windows'
         run: |
-          choco install sonar-scanner
+          # Télécharger le scanner Sonar
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-windows.zip
+          
+          # Décompresser le scanner Sonar
+          Expand-Archive -Path sonar-scanner-cli-4.6.0.2311-windows.zip -DestinationPath sonar-scanner
 
-      - name: Run SonarScanner
-        if: runner.os == 'Windows'
-        run: |
-          sonar-scanner --version
+          # Spécifier le chemin de destination
+          $destinationPath = "C:\sonar-scanner"
 
+          # Créer le dossier s'il n'existe pas
+          if (!(Test-Path $destinationPath)) {
+            mkdir $destinationPath
+          }
+
+          # Copier le scanner Sonar vers l'emplacement désiré sur l'environnement Windows
+          Copy-Item -Path "sonar-scanner\*" -Destination "$destinationPath" -Recurse
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
@@ -50,4 +59,3 @@ jobs:
             -Dsonar.login=${{ secrets.CODECOV_TOKEN }}
 
       # Note: Replace <Your_Project_Key>, <Your_Organization_Key> and ${{ secrets.SONARCLOUD_TOKEN }} with actual values
-
