@@ -19,10 +19,10 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           # Télécharger le scanner Sonar
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-windows.zip
+          Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-windows.zip" -OutFile "sonar-scanner.zip"
           
           # Décompresser le scanner Sonar
-          Expand-Archive -Path sonar-scanner-cli-4.6.0.2311-windows.zip -DestinationPath sonar-scanner
+          Expand-Archive -Path sonar-scanner.zip -DestinationPath sonar-scanner
 
           # Spécifier le chemin de destination
           $destinationPath = "C:\sonar-scanner"
