@@ -26,6 +26,7 @@ jobs:
           
           # Add sonar-scanner\bin directory to PATH
           $env:PATH += ";$(pwd)/sonar-scanner/bin"
+          echo $PATH
 
           # Verify SonarScanner installation
           sonar-scanner --version
