@@ -18,18 +18,13 @@ jobs:
       - name: Install SonarScanner
         if: runner.os == 'Windows'
         run: |
-          # Download SonarScanner for Windows
-          Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-windows.zip" -OutFile "sonar-scanner.zip"
-          
-          # Extract SonarScanner
-          Expand-Archive -Path "sonar-scanner.zip" -DestinationPath "sonar-scanner"
-          
-          # Add sonar-scanner\bin directory to PATH
-          $env:PATH += ";$(pwd)/sonar-scanner/bin"
-          echo $PATH
+          choco install sonar-scanner
 
-          # Verify SonarScanner installation
+      - name: Run SonarScanner
+        if: runner.os == 'Windows'
+        run: |
           sonar-scanner --version
+
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
