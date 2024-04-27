@@ -24,13 +24,13 @@ jobs:
           # Décompresser le scanner Sonar
           Expand-Archive -Path sonar-scanner.zip -DestinationPath sonar-scanner
 
-          # Spécifier le chemin de destination
-          $destinationPath = "C:\sonar-scanner"
-
           # Créer le dossier s'il n'existe pas
           if (!(Test-Path $destinationPath)) {
             mkdir $destinationPath
+            $destinationPath = "C:\sonar-scanner"     
           }
+          esle :
+            $destinationPath = "C:\sonar-scanner"
 
           # Copier le scanner Sonar vers l'emplacement désiré sur l'environnement Windows
           Copy-Item -Path "sonar-scanner\*" -Destination "$destinationPath" -Recurse
