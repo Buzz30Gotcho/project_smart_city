@@ -1,5 +1,5 @@
 # Define a workflow to generate coverage report and upload to codecov
-name: Coverage, Test, and SonarCloud Analysis (Linux)
+name: Coverage And Test (Linux)
 
 on:
   push:
