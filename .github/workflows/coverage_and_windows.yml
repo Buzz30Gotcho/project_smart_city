@@ -20,20 +20,20 @@ jobs:
         run: |
           # Télécharger le scanner Sonar
           Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-windows.zip" -OutFile "sonar-scanner.zip"
-          
+
           # Décompresser le scanner Sonar
           Expand-Archive -Path sonar-scanner.zip -DestinationPath sonar-scanner
 
+          # Définir le chemin de destination
+          $destinationPath = "C:\sonar-scanner"
+
           # Créer le dossier s'il n'existe pas
           if (!(Test-Path $destinationPath)) {
-            mkdir $destinationPath
-            $destinationPath = "C:\sonar-scanner"     
+              mkdir $destinationPath
           }
-          esle :
-            $destinationPath = "C:\sonar-scanner"
 
           # Copier le scanner Sonar vers l'emplacement désiré sur l'environnement Windows
-          Copy-Item -Path "sonar-scanner\*" -Destination "$destinationPath" -Recurse
+          Copy-Item -Path "sonar-scanner\*" -Destination $destinationPath -Recurse
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
@@ -56,6 +56,6 @@ jobs:
             -Dsonar.organization=<buzz30gotcho> \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.CODECOV_TOKEN }}
+            -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
 
       # Note: Replace <Your_Project_Key>, <Your_Organization_Key> and ${{ secrets.SONARCLOUD_TOKEN }} with actual values
