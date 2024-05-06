@@ -36,8 +36,16 @@ jobs:
         run: |
           cd proximity_client
           lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
-        
-      # Analyze code with SonarCloud
+
+      # Upload coverage report to codecov
+      - name: Upload coverage report to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./proximity_client/coverage/lcov.cleaned.info
+
+
+    # Analyze code with SonarCloud
       - name: Analyze code with SonarCloud
         run: |
           sudo apt-get install -y default-jre
@@ -50,12 +58,4 @@ jobs:
             -Dsonar.organization=buzz30gotcho \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
-
-
-      # Upload coverage report to codecov
-      - name: Upload coverage report to codecov
-        uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./proximity_client/coverage/lcov.cleaned.info
+            -Dsonar.login=${{secrets.SONARCLOUD_TOKEN}}
