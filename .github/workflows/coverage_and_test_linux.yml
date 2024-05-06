@@ -44,7 +44,7 @@ jobs:
           sudo apt-get install -y unzip
           wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-linux.zip
           unzip sonar-scanner-cli-4.6.0.2311-linux.zip
-          export PATH=$PATH:/path/to/sonar-scanner/bin
+          export PATH=$PATH:/home/buzz/Documents/sonnar/sonar-scanner-4.6.0.2311-linux/bin
           sonar-scanner \
             -Dsonar.projectKey=buzz30gotcho \
             -Dsonar.organization=buzz30gotcho \
