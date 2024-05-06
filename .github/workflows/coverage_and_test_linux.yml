@@ -46,11 +46,12 @@ jobs:
           unzip sonar-scanner-cli-4.6.0.2311-linux.zip
           export PATH=$PATH:/path/to/sonar-scanner/bin
           sonar-scanner \
-            -Dsonar.projectKey=<buzz30gotcho> \
-            -Dsonar.organization=<buzz30gotcho> \
+            -Dsonar.projectKey=buzz30gotcho \
+            -Dsonar.organization=buzz30gotcho \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
+
 
       # Upload coverage report to codecov
       - name: Upload coverage report to codecov
