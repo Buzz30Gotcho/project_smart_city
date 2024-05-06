@@ -1,5 +1,5 @@
 # Define a workflow to generate coverage report and upload to codecov
-name: Coverage And Test (Linux)
+name: Coverage, Test, and SonarCloud Analysis (Linux)
 
 on:
   push:
@@ -8,12 +8,8 @@ on:
     branches: [ main ]
 
 jobs:
-  coverage:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+  coverage_and_sonarcloud:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -25,16 +21,15 @@ jobs:
         with:
           flutter-version: '3.19.5'  # Specify your Flutter version here
 
-      # Install lcov (for Linux and macOS)
+      # Install lcov
       - name: Install lcov
         run: sudo apt-get install -y lcov
-
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
         run: |
           cd proximity_client  # Change directory to proximity_client
-          flutter test --coverage  test/
+          flutter test --coverage test/
 
       # Clean coverage report
       - name: Clean coverage report  
@@ -42,9 +37,24 @@ jobs:
           cd proximity_client
           lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
         
+      # Analyze code with SonarCloud
+      - name: Analyze code with SonarCloud
+        run: |
+          sudo apt-get install -y default-jre
+          sudo apt-get install -y unzip
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-linux.zip
+          unzip sonar-scanner-cli-4.6.0.2311-linux.zip
+          export PATH=$PATH:/path/to/sonar-scanner/bin
+          sonar-scanner \
+            -Dsonar.projectKey=<buzz30gotcho> \
+            -Dsonar.organization=<buzz30gotcho> \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
+
       # Upload coverage report to codecov
       - name: Upload coverage report to codecov
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage/lcov.cleaned.info
+          file: ./proximity_client/coverage/lcov.cleaned.info
