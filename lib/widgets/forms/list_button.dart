@@ -7,7 +7,7 @@ class ListButton extends StatelessWidget {
       {Key? key, required this.title, this.leadIcon, this.leadImage, this.color, this.onPressed, this.enabled = true})
       : super(key: key);
 
-  final String title;
+  final String title; // c'est oblige de mettre le titre quand on appelle ListButton et les autres sont facultatifs
   final IconData? leadIcon;
   final String? leadImage;
   final Color? color;
@@ -43,7 +43,7 @@ class ListButton extends StatelessWidget {
                       child: Text(title,
                           style: Theme.of(context)
                               .textTheme
-                              .headline5!
+                              .headlineSmall!
                               .copyWith(
                               color: ((onPressed == null) || !enabled!)
                                   ? Theme.of(context).disabledColor

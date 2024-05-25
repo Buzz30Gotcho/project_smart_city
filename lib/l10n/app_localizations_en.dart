@@ -294,6 +294,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get partialRefundAmountHint => 'Partial Refund Amount .';
 
   /// [Settings]
+  // rajout de qr code en mode anglais
+  @override
+  String get qrCodeScreen => 'Qr Code';
+  // ---------------------
   @override
   String get settings => 'Settings';
   @override

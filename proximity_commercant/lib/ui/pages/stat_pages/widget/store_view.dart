@@ -9,8 +9,9 @@ import 'package:proximity/widgets/forms/section_divider.dart';
 import 'package:proximity/widgets/top_bar.dart';
 import 'package:proximity_commercant/domain/order_repository/src/order_service.dart';
 import 'package:proximity_commercant/domain/statistic_repository/models/store_view.dart';
+import 'package:proximity_commercant/domain/statistic_repository/src/statistic_service.dart';
 
-import 'package:proximity_commercant/domain/statistic_repository/src/Statistic_service.dart';
+import '../../../../domain/statistic_repository/models/store_view.dart';
 
 class StoreViewWidget extends StatefulWidget {
   const StoreViewWidget({Key? key}) : super(key: key);
@@ -39,10 +40,10 @@ class _StoreViewWidgetState extends State<StoreViewWidget> {
               children: [
                 Text(
                   localizations!.storeViews,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20),
-                buildBarChart(statiscService.storeViews!),
+                const SizedBox(height: 20),
+                buildBarChart(statiscService!.storeViews!),
               ],
             ),
           ),

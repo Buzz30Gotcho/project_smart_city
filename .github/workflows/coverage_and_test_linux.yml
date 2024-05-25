@@ -10,6 +10,9 @@ on:
 jobs:
   coverage_and_sonarcloud:
     runs-on: ubuntu-latest
+    defaults:
+      run: # c'est les dossiers ou les jobs vont se declencher
+        working-directory: proximity_client proximity_commercant
 
     steps:
       - name: Checkout code
@@ -21,11 +24,15 @@ jobs:
         with:
           flutter-version: '3.19.5'  # Specify your Flutter version here
 
-      # Install lcov
+      # Mis à jour de Fluter    
+      - name: Update Flutter
+        run: Flutter pub get    
+      
+          # Install lcov
       - name: Install lcov
         run: sudo apt-get install -y lcov
 
-      # Run tests and generate coverage report
+      # Run tests(widgets,unitaire) and generate coverage report
       - name: Run tests and generate coverage report
         run: |
           cd proximity_client  # Change directory to proximity_client

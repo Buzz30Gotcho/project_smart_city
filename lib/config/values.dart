@@ -8,6 +8,7 @@ const double small_50 = 4.0;
 const double small_75 = 6.0;
 const double small_100 = 8.0; // default padding
 
+
 const double normal_100 = 16.0; // larger padding
 const double normal_125 = 20.0;
 const double normal_150 = 24.0;

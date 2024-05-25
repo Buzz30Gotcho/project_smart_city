@@ -11,10 +11,10 @@ import 'package:proximity_client/ui/pages/authentication_pages/widgets/terms_and
 import 'package:proximity_client/ui/pages/main_pages/view/main_screen.dart';
 import 'package:proximity_client/domain/authentication/src/googleSigninApi.dart';
 
+// RAJOUT DE LA CLASSE CAR OUBLIE
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
-  @override
   Widget build(BuildContext context) {
     final signupValidation = Provider.of<SignupValidation>(context);
     final localizations = AppLocalizations.of(context);

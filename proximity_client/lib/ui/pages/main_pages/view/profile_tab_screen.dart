@@ -125,6 +125,18 @@ class ProfileTabScreen extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => const AppearanceScreen()));
                   }),
+
+              ListButton(
+                  title: localizations.qrCodeScreen,
+                  leadIcon: ProximityIcons.qr_code_scanner,
+                  color: scaffoldBackgroundDarkColor,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const  QrCodeScreen()));
+                  }),
+
               ListButton(
                   title: localizations.language,
                   leadIcon: ProximityIcons.language,

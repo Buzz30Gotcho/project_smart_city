@@ -11,7 +11,7 @@ import 'package:proximity_commercant/domain/order_repository/src/order_service.d
 import 'package:proximity_commercant/domain/statistic_repository/models/store_sale.dart';
 import 'package:proximity_commercant/domain/statistic_repository/models/store_sale.dart';
 
-import 'package:proximity_commercant/domain/statistic_repository/src/Statistic_service.dart';
+import 'package:proximity_commercant/domain/statistic_repository/src/statistic_service.dart';
 
 class StoreSaleWidget extends StatefulWidget {
   const StoreSaleWidget({Key? key}) : super(key: key);

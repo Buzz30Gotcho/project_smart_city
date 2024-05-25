@@ -7,7 +7,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:proximity/config/config.dart';
 import 'package:proximity/l10n/app_localizations.dart';
-import 'package:proximity_commercant/domain/statistic_repository/src/Statistic_service.dart';
+import 'package:proximity_commercant/domain/statistic_repository/src/statistic_service.dart';
 
 class ProductMonthlyViews extends StatelessWidget {
   const ProductMonthlyViews({Key? key}) : super(key: key);

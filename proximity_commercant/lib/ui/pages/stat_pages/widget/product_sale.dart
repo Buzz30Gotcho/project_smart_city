@@ -10,7 +10,8 @@ import 'package:proximity/widgets/top_bar.dart';
 import 'package:proximity_commercant/domain/order_repository/src/order_service.dart';
 import 'package:proximity_commercant/domain/statistic_repository/models/product_sale.dart';
 
-import 'package:proximity_commercant/domain/statistic_repository/src/Statistic_service.dart';
+import 'package:proximity_commercant/domain/statistic_repository/src/statistic_service.dart';
+import 'package:proximity_commercant/domain/statistic_repository/src/statistic_service.dart';
 
 class ProductSalesWidget extends StatefulWidget {
   const ProductSalesWidget({Key? key}) : super(key: key);
@@ -50,8 +51,7 @@ class _ProductSalesWidgetState extends State<ProductSalesWidget> {
                                   children: [
                                     Container(
                                         child: Text(
-                                            localizations!.noProductViewed +
-                                                '${statiscService.period}')),
+                                            '${localizations.noProductViewed}${statiscService.period}')),
                                   ],
                                 ))
                             : builProductRevenuesBarChart(

@@ -12,7 +12,7 @@ import 'package:proximity/widgets/top_bar.dart';
 import 'package:proximity_commercant/domain/order_repository/src/order_service.dart';
 import 'package:proximity_commercant/domain/statistic_repository/models/region_view.dart';
 
-import 'package:proximity_commercant/domain/statistic_repository/src/Statistic_service.dart';
+import 'package:proximity_commercant/domain/statistic_repository/src/statistic_service.dart';
 import 'package:proximity_commercant/ui/pages/stat_pages/widget/coloredCard.dart';
 import 'package:proximity_commercant/ui/pages/stat_pages/widget/convertion_rate.dart';
 import 'package:proximity_commercant/ui/pages/stat_pages/widget/product_monthly_view.dart';

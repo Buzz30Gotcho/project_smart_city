@@ -292,6 +292,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get partialRefundAmountHint => 'مبلغ الاسترداد الجزئي.';
 
   /// [Settings]
+  // rajout en mode arabe de qr code
+  @override
+  String get qrCodeScreen => ' رمز الاستجابة السريعة';
+ //-----------------------
   @override
   String get settings => 'الإعدادات';
   @override

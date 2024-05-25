@@ -60,23 +60,23 @@ class StoresList extends StatelessWidget {
                 Container(
                     padding: const EdgeInsets.all(normal_100),
                     child: Text("ID.",
-                        style: Theme.of(context).textTheme.subtitle2)),
+                        style: Theme.of(context).textTheme.titleSmall)),
                 Container(
                     padding: const EdgeInsets.all(normal_100),
                     child: Text("Name.",
-                        style: Theme.of(context).textTheme.subtitle2)),
+                        style: Theme.of(context).textTheme.titleSmall)),
                 Container(
                     padding: const EdgeInsets.all(normal_100),
                     child: Text("Address.",
-                        style: Theme.of(context).textTheme.subtitle2)),
+                        style: Theme.of(context).textTheme.titleSmall)),
                 Container(
                     padding: const EdgeInsets.all(normal_100),
                     child: Text("Seller.",
-                        style: Theme.of(context).textTheme.subtitle2)),
+                        style: Theme.of(context).textTheme.titleSmall)),
                 Container(
                     padding: const EdgeInsets.all(normal_100),
                     child: Text("Verified.",
-                        style: Theme.of(context).textTheme.subtitle2)),
+                        style: Theme.of(context).textTheme.titleSmall)),
                 const SizedBox()
               ]),
             ],
@@ -112,22 +112,22 @@ class StoresList extends StatelessWidget {
                               padding: const EdgeInsets.all(normal_100),
                               child: Text(_stores[i].id,
                                   style:
-                                  Theme.of(context).textTheme.bodyText1)),
+                                  Theme.of(context).textTheme.bodyLarge)),
                           Container(
                               padding: const EdgeInsets.all(normal_100),
                               child: Text(_stores[i].name,
                                   style:
-                                  Theme.of(context).textTheme.bodyText1)),
+                                  Theme.of(context).textTheme.bodyLarge)),
                           Container(
                               padding: const EdgeInsets.all(normal_100),
                               child: Text(_stores[i].address,
                                   style:
-                                      Theme.of(context).textTheme.bodyText1)),
+                                      Theme.of(context).textTheme.bodyLarge)),
                           Container(
                               padding: const EdgeInsets.all(normal_100),
                               child: Text(_stores[i].seller,
                                   style:
-                                      Theme.of(context).textTheme.bodyText1)),
+                                      Theme.of(context).textTheme.bodyLarge)),
                           Container(
                               padding: const EdgeInsets.all(normal_100),
                               alignment: Alignment.centerLeft,
@@ -150,4 +150,6 @@ class StoresList extends StatelessWidget {
       ]),
     );
   }
-}
+} 
+
+

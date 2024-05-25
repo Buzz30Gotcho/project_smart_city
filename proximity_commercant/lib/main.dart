@@ -17,7 +17,7 @@ import 'package:proximity_commercant/CustomErrorWidget.dart';
 //import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:proximity_commercant/domain/notification_repository/notification_repository.dart';
 
-import 'domain/statistic_repository/src/Statistic_service.dart';
+import 'domain/statistic_repository/src/statistic_service.dart';
 import 'proximity_commercant_app.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();

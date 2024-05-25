@@ -206,6 +206,12 @@ abstract class AppLocalizations {
   String get searchProduct;
   String get todayDeals;
 
+///[User_QrCode]
+//String get nom;
+// String get prenom;
+// String get numero_product;
+String get qrCodeScreen;
+
   /// [SelleHomePage]
   String get welcome;
 

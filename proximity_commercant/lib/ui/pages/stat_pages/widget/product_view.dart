@@ -9,7 +9,8 @@ import 'package:proximity/widgets/top_bar.dart';
 import 'package:proximity_commercant/domain/order_repository/src/order_service.dart';
 import 'package:proximity_commercant/domain/statistic_repository/models/product_view.dart';
 
-import 'package:proximity_commercant/domain/statistic_repository/src/Statistic_service.dart';
+import 'package:proximity_commercant/domain/statistic_repository/src/statistic_service.dart';
+import 'package:proximity_commercant/domain/statistic_repository/src/statistic_service.dart';
 
 class ProductsIncome extends StatefulWidget {
   const ProductsIncome({Key? key}) : super(key: key);

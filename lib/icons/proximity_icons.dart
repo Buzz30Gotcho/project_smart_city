@@ -6,7 +6,7 @@ import 'package:proximity/config/themes/light_theme.dart';
 class DuotoneIcon extends StatelessWidget {
   const DuotoneIcon(
       {Key? key,
-      required this.primaryLayer,
+      required this.primaryLayer, 
       this.secondaryLayer,
       this.size,
       this.color})
@@ -15,7 +15,8 @@ class DuotoneIcon extends StatelessWidget {
   final IconData? primaryLayer, secondaryLayer;
   final double? size;
   final Color? color;
-
+// on oblige la classe a accepte un atribut de icon 'primaryLayer', les autres sont facultatifs
+// c'est a dire quand on appelle la classe DuotoneIcon on devra forcement mettre un attribut
   @override
   Widget build(BuildContext context) { // le widget DuotoneIcon affiche 2 icones superposees
     return SizedBox(
@@ -39,16 +40,20 @@ class DuotoneIcon extends StatelessWidget {
 class ProximityIcons {
   ProximityIcons._();
 
-  static const _fontFamily = 'Proximity';
-  static const _packageName = 'proximity';
+  static const _fontFamily = 'Proximity';// NOM DE LA FAMILLE DE POLICE
+  static const _packageName = 'proximity';// NOM DU PACKAGE OU SE TROUVENT LES ICONES PERSONNALISES
   static const IconData applePay = IconData(0xe9a1, fontFamily: _fontFamily, fontPackage: "mbi");
   static const IconData googlePay = IconData(0xeaab, fontFamily: _fontFamily, fontPackage: "mbi") ;
 
+// ICON QR CODE
+ // static const IconData qr_code_scanner = IconData(0xe4f7,fontFamily: _fontFamily, fontPackage: "mbi");
+static const IconData qr_code_scanner = IconData(0xe4f7, fontFamily: 'MaterialIcons');
+// ---------------------------------------------
   static const IconData order =
       IconData(0xe800, fontFamily: _fontFamily, fontPackage: _packageName);
   static const IconData dark_theme =
       IconData(0xe801, fontFamily: _fontFamily, fontPackage: _packageName);
-  static const IconData language =
+  static const IconData language = 
       IconData(0xe802, fontFamily: _fontFamily, fontPackage: _packageName);
   static const IconData light_theme =
       IconData(0xe803, fontFamily: _fontFamily, fontPackage: _packageName);
