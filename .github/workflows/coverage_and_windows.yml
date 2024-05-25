@@ -24,6 +24,10 @@ jobs:
       - name: Install SonarScanner
         run : flutter pub get  
 
+      # Install lcov (for Linux and macOS)
+      - name: Install lcov
+        run: sudo apt-get install -y lcov
+
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
         run: |
