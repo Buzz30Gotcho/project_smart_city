@@ -44,7 +44,8 @@ jobs:
         run: |
           cd proximity_client
           lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
-        
+          ls -la coverage # List files in the coverage
+          
       # Upload coverage report to codecov
       - name: Upload coverage report to codecov
         uses: codecov/codecov-action@v2
