@@ -24,16 +24,10 @@ jobs:
       - name: Updates Flutter
         run: flutter pub get 
 
-      # Install lcov for Windows
-      - name: Install lcov
+      # Install gcovr for Windows
+      - name: Install gcovr
         run: |
-          Invoke-WebRequest -Uri "https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15.tar.gz" -OutFile "lcov-1.15.tar.gz"
-          tar -xzvf lcov-1.15.tar.gz
-          cd lcov-1.15
-          make install 
-
-      - name: Check if lcov is installed
-        run: lcov --version
+          pip install gcovr
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
@@ -41,8 +35,11 @@ jobs:
           cd proximity_client  # Change directory to proximity_client
           flutter test --coverage test/
 
+      # Generate coverage report using gcovr
+      - name: Generate coverage report using gcovr
+        run: gcovr -r . -o coverage/lcov.info
+
       # Clean coverage report (if needed)
       - name: Clean coverage report
         run: |
-          cd proximity_client
-          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+          # You might need to implement cleaning steps specific to your project's coverage report format
