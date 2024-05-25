@@ -58,12 +58,13 @@ jobs:
       - name: Analyze code with SonarCloud
         env:
           SONAR_SCANNER_OPTS: -server
+          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.0/x64
+          PATH: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.0/x64/bin:${{ github.workspace }}/sonar-scanner-4.6.0.2311-linux/bin:$PATH
         run: |
           sudo apt-get install -y unzip
           wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-linux.zip
-          unzip sonar-scanner-cli-4.6.0.2311-linux.zip -d $HOME
-          export PATH=$HOME/sonar-scanner-4.6.0.2311-linux/bin:$PATH
-          export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk
+          unzip sonar-scanner-cli-4.6.0.2311-linux.zip
+          export PATH=${{ github.workspace }}/sonar-scanner-4.6.0.2311-linux/bin:$PATH
           sonar-scanner \
             -Dsonar.projectKey=buzz30gotcho \
             -Dsonar.organization=Buzz30gotcho \
