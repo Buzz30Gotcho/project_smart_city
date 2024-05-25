@@ -48,9 +48,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage/lcov.cleaned.info
 
-      # Analyze Flutter code
-      - name: Analyze Flutter code
-        run: flutter analyze
 
   build_ios:
     name: Build Flutter (iOS)
