@@ -77,4 +77,4 @@ jobs:
 
       # Build iOS app
       - name: Build iOS app
-        run: flutter build ios
+        run: flutter build ios -t lib/main.dart
