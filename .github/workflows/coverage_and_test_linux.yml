@@ -8,8 +8,12 @@ on:
     branches: [ main ]
 
 jobs:
-  coverage_and_sonarcloud:
-    runs-on: ubuntu-latest
+  coverage:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
 
     steps:
       - name: Checkout code
@@ -21,52 +25,27 @@ jobs:
         with:
           flutter-version: '3.19.5'  # Specify your Flutter version here
 
-      # Update Flutter dependencies
-      - name: Update Flutter dependencies
-        run: flutter pub get
-        working-directory: proximity_client
-
-      # Install lcov
+      # Install lcov (for Linux and macOS)
       - name: Install lcov
-        run: apt-get install -y lcov
+        run: sudo apt-get install -y lcov
 
-      # Run tests (widgets, unit) and generate coverage report
+
+      # Run tests and generate coverage report
       - name: Run tests and generate coverage report
-        run: flutter test --coverage
-        working-directory: proximity_client
+        run: |
+          cd proximity_client  # Change directory to proximity_client
+          flutter test --coverage  test/
 
       # Clean coverage report
-      - name: Clean coverage report
-        run: lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
-        working-directory: proximity_client
-
+      - name: Clean coverage report  
+        run: |
+          cd proximity_client
+          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+        
       # Upload coverage report to codecov
       - name: Upload coverage report to codecov
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: proximity_client/coverage/lcov.cleaned.info
+          file: ./coverage/lcov.cleaned.info
 
-      # Set up JDK 17
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      # # Install and run SonarScanner
-      # - name: Install and run SonarScanner
-      #   run: |
-      #     apt-get install -y wget unzip
-      #     wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-linux.zip
-      #     unzip sonar-scanner-cli-4.6.0.2311-linux.zip
-      #     export PATH=${{ github.workspace }}/sonar-scanner-4.6.0.2311-linux/bin:$PATH
-      #     sonar-scanner \
-      #       -Dsonar.projectKey=buzz30gotcho \
-      #       -Dsonar.organization=Buzz30gotcho \
-      #       -Dsonar.sources=. \
-      #       -Dsonar.host.url=https://sonarcloud.io \
-      #       -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
-      #   env:
-      #     JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.0/x64
-      #   working-directory: proximity_client
