@@ -32,6 +32,9 @@ jobs:
           cd lcov-1.15
           make install 
 
+      - name: Check if lcov is installed
+        run: lcov --version
+
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
         run: |
