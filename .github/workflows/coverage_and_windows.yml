@@ -27,9 +27,10 @@ jobs:
       # Install lcov for Windows
       - name: Install lcov
         run: |
-          Invoke-WebRequest -Uri "https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15-win64.zip" -OutFile "lcov.zip"
-          Expand-Archive -Path "lcov.zip" -DestinationPath "lcov"
-          $env:PATH += ";$(pwd)/lcov"
+          wget https://github.com/linux-test-project/lcov/releases/download/v1.15/lcov-1.15.tar.gz
+          tar -xzvf lcov-1.15.tar.gz
+          cd lcov-1.15
+          make install 
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
