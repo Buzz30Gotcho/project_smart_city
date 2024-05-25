@@ -25,6 +25,10 @@ jobs:
         with:
           flutter-version: '3.19.5'  # Specify your Flutter version here
 
+      - name: Update Flutter
+        run:
+          flutter pub get
+
       # Install lcov (for Linux and macOS)
       - name: Install lcov
         run: sudo apt-get install -y lcov
