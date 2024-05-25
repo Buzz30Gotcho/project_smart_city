@@ -20,26 +20,26 @@ jobs:
         with:
           flutter-version: '3.19.5'  # Specify your Flutter version here
           
-      # Install SonarScanner
-      - name: Install SonarScanner
-        if: runner.os == 'Windows'
-        run: |
-          # Télécharger le scanner Sonar
-          Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-windows.zip" -OutFile "sonar-scanner.zip"
+      # # Install SonarScanner
+      # - name: Install SonarScanner
+      #   if: runner.os == 'Windows'
+      #   run: |
+      #     # Télécharger le scanner Sonar
+      #     Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-windows.zip" -OutFile "sonar-scanner.zip"
 
-          # Décompresser le scanner Sonar
-          Expand-Archive -Path sonar-scanner.zip -DestinationPath sonar-scanner
+      #     # Décompresser le scanner Sonar
+      #     Expand-Archive -Path sonar-scanner.zip -DestinationPath sonar-scanner
 
-          # Définir le chemin de destination
-          $destinationPath = "C:\sonar-scanner"
+      #     # Définir le chemin de destination
+      #     $destinationPath = "C:\sonar-scanner"
 
-          # Créer le dossier s'il n'existe pas
-          if (!(Test-Path $destinationPath)) {
-              mkdir $destinationPath
-          }
+      #     # Créer le dossier s'il n'existe pas
+      #     if (!(Test-Path $destinationPath)) {
+      #         mkdir $destinationPath
+      #     }
 
-          # Copier le scanner Sonar vers l'emplacement désiré sur l'environnement Windows
-          Copy-Item -Path "sonar-scanner\*" -Destination $destinationPath -Recurse
+      #     # Copier le scanner Sonar vers l'emplacement désiré sur l'environnement Windows
+      #     Copy-Item -Path "sonar-scanner\*" -Destination $destinationPath -Recurse
 
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
@@ -49,10 +49,10 @@ jobs:
 
       # Clean coverage report (if needed)
       # Note: SonarCloud typically analyzes code without needing to clean coverage reports
-      # - name: Clean coverage report
-      #   run: |
-      #     cd proximity_client
-      #     lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+      - name: Clean coverage report
+        run: |
+          cd proximity_client
+          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
 
       # Analyze code with SonarCloud
       # - name: Analyze code with SonarCloud
