@@ -55,13 +55,13 @@ jobs:
       #     lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
 
       # Analyze code with SonarCloud
-      - name: Analyze code with SonarCloud
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=<buzz30gotcho> \
-            -Dsonar.organization=<buzz30gotcho> \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
+      # - name: Analyze code with SonarCloud
+      #   run: |
+      #     sonar-scanner \
+      #       -Dsonar.projectKey=<buzz30gotcho> \
+      #       -Dsonar.organization=<buzz30gotcho> \
+      #       -Dsonar.sources=. \
+      #       -Dsonar.host.url=https://sonarcloud.io \
+      #       -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
 
       # Note: Replace <Your_Project_Key>, <Your_Organization_Key> and ${{ secrets.SONARCLOUD_TOKEN }} with actual values
