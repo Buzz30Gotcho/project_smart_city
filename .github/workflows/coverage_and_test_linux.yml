@@ -28,7 +28,7 @@ jobs:
 
       # Install lcov
       - name: Install lcov
-        run: sudo apt-get install -y lcov
+        run: apt-get install -y lcov
 
       # Run tests (widgets, unit) and generate coverage report
       - name: Run tests and generate coverage report
@@ -54,14 +54,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # Analyze code with SonarCloud
-      - name: Analyze code with SonarCloud
-        env:
-          SONAR_SCANNER_OPTS: -server
-          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.0/x64
-          PATH: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.0/x64/bin:${{ github.workspace }}/sonar-scanner-4.6.0.2311-linux/bin:$PATH
+      # Install and run SonarScanner
+      - name: Install and run SonarScanner
         run: |
-          sudo apt-get install -y unzip
+          apt-get install -y wget unzip
           wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-linux.zip
           unzip sonar-scanner-cli-4.6.0.2311-linux.zip
           export PATH=${{ github.workspace }}/sonar-scanner-4.6.0.2311-linux/bin:$PATH
@@ -70,5 +66,7 @@ jobs:
             -Dsonar.organization=Buzz30gotcho \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{secrets.SONARCLOUD_TOKEN}}
+            -Dsonar.login=${{ secrets.SONARCLOUD_TOKEN }}
+        env:
+          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.0/x64
         working-directory: proximity_client
