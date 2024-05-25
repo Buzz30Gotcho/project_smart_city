@@ -1,4 +1,4 @@
-name: Analysis (Windows)
+name: Coverage And Tests (Windows)
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  sonarcloud_analysis:
+  Coverage_and_test:
     runs-on: windows-latest
 
     steps:
