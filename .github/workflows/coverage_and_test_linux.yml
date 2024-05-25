@@ -1,5 +1,4 @@
-# Define a workflow to generate coverage report and upload to codecov
-name: Coverage And Test (Linux)
+name: Coverage And Test (Linux and macOS)
 
 on:
   push:
@@ -8,12 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  coverage:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+  Linux:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -23,7 +18,7 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.5'  # Specify your Flutter version here
+          flutter-version: '2.5.0'  # Updated Flutter version
 
       - name: Update Flutter
         run: flutter pub get
@@ -32,17 +27,14 @@ jobs:
       - name: Install lcov
         run: sudo apt-get install -y lcov
 
-
       # Run tests and generate coverage report
       - name: Run tests and generate coverage report
         run: |
-          cd proximity_client  # Change directory to proximity_client
-          flutter test --coverage  test/
+          flutter test --coverage
 
       # Clean coverage report
       - name: Clean coverage report  
         run: |
-          cd proximity_client
           lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
           ls -la coverage # List files in the coverage
           
@@ -53,3 +45,36 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage/lcov.cleaned.info
 
+  macOS:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Install Flutter
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '2.5.0'  # Updated Flutter version
+
+      - name: Update Flutter
+        run: flutter pub get
+
+      # Run tests and generate coverage report
+      - name: Run tests and generate coverage report
+        run: |
+          flutter test --coverage
+
+      # Clean coverage report
+      - name: Clean coverage report  
+        run: |
+          lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+          ls -la coverage # List files in the coverage
+          
+      # Upload coverage report to codecov
+      - name: Upload coverage report to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/lcov.cleaned.info
