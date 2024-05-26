@@ -1,55 +1,58 @@
-# Define a workflow to generate coverage report and upload to codecov
-name: Coverage And Test (Linux)
+name: Build and Deploy Flutter Web to Firebase
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  coverage:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+  test_build_deploy:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Install Flutter
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.5'  # Specify your Flutter version here
+          flutter-version: '3.19.5'  # Spécifiez la version de Flutter ici
 
-      # Mis à jour de Flutter
-      - name:  Flutter
+      - name: Get Flutter dependencies
         run: flutter pub get
 
-      # Install lcov (for Linux and macOS)
       - name: Install lcov
         run: sudo apt-get install -y lcov
 
-
-      # Run tests and generate coverage report
       - name: Run tests and generate coverage report
         run: |
           cd proximity_client  # Change directory to proximity_client
-          flutter test --coverage  test/
+          flutter test --coverage test/
 
-      # Clean coverage report
-      - name: Clean coverage report  
+      - name: Clean coverage report
         run: |
           cd proximity_client
           lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
-        
-      # Upload coverage report to codecov
+
       - name: Upload coverage report to codecov
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage/lcov.cleaned.info
-          
+          file: proximity_client/coverage/lcov.cleaned.info
+
+      - name: Build Flutter web app
+        run: |
+          cd proximity_client
+          flutter build web
+
+      - name: Install Firebase CLI locally
+        run: |
+          npm install --save-dev firebase-tools
+
+      - name: Deploy to Firebase
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          cd proximity_client
+          npx firebase-tools deploy --only hosting --token "$FIREBASE_TOKEN"
