@@ -66,11 +66,39 @@ jobs:
           cd proximity_client
           flutter analyze
 
+  # Stage: Lint Fix
+  lint_fix_flutter_code:
+    name: Lint Fix Flutter Code
+    runs-on: macos-latest
+    needs: [coverage_flutter_test, analyze_flutter_code]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5'
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Run Flutter fix --dry-run
+        run: |
+          cd proximity_client
+          flutter fix --dry-run
+
+      - name: Run Flutter fix --apply
+        run: |
+          cd proximity_client
+          flutter fix --apply
+
   # Stage: Build
   build_ios:
     name: Build Flutter (iOS)
     runs-on: macos-latest
-    needs: [coverage_flutter_test, analyze_flutter_code]
+    needs: [coverage_flutter_test, analyze_flutter_code, lint_fix_flutter_code]
     
     steps:
       - name: Checkout code
