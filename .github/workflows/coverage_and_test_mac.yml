@@ -99,4 +99,4 @@ jobs:
       - name: Build iOS app
         run: | 
           cd proximity_client
-          flutter build ios -t lib/main.dart
+          flutter run
