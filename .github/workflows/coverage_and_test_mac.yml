@@ -61,11 +61,6 @@ jobs:
       - name: Get Flutter dependencies
         run: flutter pub get
 
-      - name: Run Flutter analyze
-        run: |
-          cd proximity_client
-          flutter analyze
-
   # Stage: Lint Fix
   lint_fix_flutter_code:
     name: Lint Fix Flutter Code
