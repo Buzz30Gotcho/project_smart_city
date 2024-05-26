@@ -77,4 +77,6 @@ jobs:
 
       # Build iOS app
       - name: Build iOS app
-        run: flutter run
+        run: | 
+          cd proximity_client
+          flutter build
