@@ -43,21 +43,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: 17
-
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.5'
-
-      - name: Get Flutter dependencies
-        run: |
-          cd proximity_client
-          flutter pub get
-
       - name: Run tests and generate coverage report
         run: |
           cd proximity_client
@@ -80,28 +65,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: 17
-
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.5'
-
-      - name: Get Flutter dependencies
-        run: |
-          cd proximity_client
-          flutter pub get
-
-      - name: Install lcov
-        run: sudo apt-get install -y lcov
-
       - name: Clean coverage report
         run: |
           cd proximity_client
           lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
+
+      - name: List cleaned coverage report
+        run: |
+          cd proximity_client
+          ls -l coverage
 
   # Job 4: Upload Coverage Report
   upload_coverage:
@@ -111,21 +83,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Install Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: 17
-
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.5'
-
-      - name: Get Flutter dependencies
-        run: |
-          cd proximity_client
-          flutter pub get
 
       - name: Upload coverage report to codecov
         uses: codecov/codecov-action@v2
