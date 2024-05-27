@@ -63,6 +63,14 @@ jobs:
           cd proximity_client
           flutter test --coverage
 
+      - name: Verify coverage report exists
+        run: |
+          cd proximity_client
+          if [ ! -f coverage/lcov.info ]; then
+            echo "Coverage report not found!"
+            exit 1
+          fi
+
   # Job 3: Clean Coverage Report
   clean_coverage:
     runs-on: ubuntu-latest
