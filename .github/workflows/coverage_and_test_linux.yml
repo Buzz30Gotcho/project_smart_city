@@ -68,6 +68,8 @@ jobs:
         with:
           flutter-version: '3.19.5'
 
+      - name: Install lcov
+        run: sudo apt-get install -y lcov
       - name: Clean coverage report
         run: |
           cd proximity_client
