@@ -97,4 +97,4 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: proximity_client/coverage/lcov.cleaned.inf
+          file: proximity_client/coverage/lcov.cleaned.info
