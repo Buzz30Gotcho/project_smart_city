@@ -8,7 +8,7 @@ on:
     branches: [ main ]
 
 jobs:
-  coverage:
+  Installation_:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -19,11 +19,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install Java
+        uses: actions/setup-java@v1 # installation de java version 17
+        with:
+          java-version: 17
+
       # Install Flutter
       - name: Install Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v2 # utilise les commandes de flutter
         with:
           flutter-version: '3.19.5'  # Specify your Flutter version here
+
+      # Mis à jour de Flutter
+      - name:  Flutter
+        run: flutter pub get
 
       # Install lcov (for Linux and macOS)
       - name: Install lcov
@@ -48,4 +57,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage/lcov.cleaned.info
-
+          
+      

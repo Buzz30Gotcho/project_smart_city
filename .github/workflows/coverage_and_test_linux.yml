@@ -116,8 +116,11 @@ jobs:
           cd proximity_client
           flutter pub get
 
-      - name: Upload coverage report to codecov
-        uses: codecov/codecov-action@v2
+      # - name: Upload coverage report to codecov
+      #   uses: codecov/codecov-action@v2
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: proximity_client/coverage/lcov.cleaned.info
