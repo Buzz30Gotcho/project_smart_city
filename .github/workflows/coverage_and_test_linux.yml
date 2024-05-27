@@ -8,49 +8,116 @@ on:
     branches: [ main ]
 
 jobs:
-  coverage:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+  # Job 1: Installation
+  installation:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Install Flutter
+      - name: Install Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.5'  # Specify your Flutter version here
+          flutter-version: '3.19.5'
 
-      # Mis à jour de Flutter
-      - name:  Flutter
-        run: flutter pub get
+      - name: Get Flutter dependencies
+        run: |
+          cd proximity_client
+          flutter pub get
 
-      # Install lcov (for Linux and macOS)
       - name: Install lcov
         run: sudo apt-get install -y lcov
 
+  # Job 2: Run Tests
+  run_tests:
+    runs-on: ubuntu-latest
+    needs: installation
 
-      # Run tests and generate coverage report
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5'
+
+      - name: Get Flutter dependencies
+        run: |
+          cd proximity_client
+          flutter pub get
+
       - name: Run tests and generate coverage report
         run: |
-          cd proximity_client  # Change directory to proximity_client
-          flutter test --coverage  test/
+          cd proximity_client
+          flutter test --coverage test/
 
-      # Clean coverage report
-      - name: Clean coverage report  
+  # Job 3: Clean Coverage Report
+  clean_coverage:
+    runs-on: ubuntu-latest
+    needs: run_tests
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5'
+
+      - name: Get Flutter dependencies
+        run: |
+          cd proximity_client
+          flutter pub get
+
+      - name: Clean coverage report
         run: |
           cd proximity_client
           lcov --remove coverage/lcov.info '*/test/*' -o coverage/lcov.cleaned.info
-        
-      # Upload coverage report to codecov
+
+  # Job 4: Upload Coverage Report
+  upload_coverage:
+    runs-on: ubuntu-latest
+    needs: clean_coverage
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5'
+
+      - name: Get Flutter dependencies
+        run: |
+          cd proximity_client
+          flutter pub get
+
       - name: Upload coverage report to codecov
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage/lcov.cleaned.info
-          
-      
+          file: proximity_client/coverage/lcov.cleaned.info
