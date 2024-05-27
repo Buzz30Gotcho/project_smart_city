@@ -10,7 +10,6 @@ import 'package:proximity_client/ui/pages/main_pages/view/onBoard.dart';
 import 'package:proximity_client/ui/pages/pages.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:proximity_client/domain/store_repository/store_repository.dart';
-import 'package:proximity/config/themes/dark_theme.dart';
 
 import 'domain/data_persistence/src/boxes.dart';
 

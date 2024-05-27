@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:proximity/proximity.dart';
-import 'package:proximity_client/domain/user_repository/user_repository.dart';
 
 //import 'package:proximity_commercant/domain/user_repository/user_repository.dart';
 //import 'package:qrcode_flutter/qrcode_flutter.dart';

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proximity/proximity.dart';
 import 'package:proximity_client/domain/user_repository/user_repository.dart';
-import 'package:proximity/config/themes/dark_theme.dart';
-import 'package:proximity/config/themes/light_theme.dart';
 /*
 Vue dans le profile , dans la categorie Appearance 
 Trois boutons sont affichés :

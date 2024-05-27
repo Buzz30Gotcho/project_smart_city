@@ -55,7 +55,7 @@ void main() {
       MaterialApp(
         home: Scaffold(
           body: SingleSelectDialog<String>(
-            items: [],
+            items: const [],
           ),
         ),
       ),

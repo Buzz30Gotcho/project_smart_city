@@ -15,6 +15,7 @@ import 'package:proximity_client/domain/authentication/src/googleSigninApi.dart'
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     final signupValidation = Provider.of<SignupValidation>(context);
     final localizations = AppLocalizations.of(context);
