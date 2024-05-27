@@ -63,6 +63,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5'
 
       - name: Clean coverage report
         run: |
@@ -74,7 +78,7 @@ jobs:
           cd proximity_client
           ls -l coverage
 
-  # Job 4: Upload Coverage Report
+  # Job 4: Upload notre rapport de couverture vers le site codecov
   upload_coverage:
     runs-on: ubuntu-latest
     needs: clean_coverage
@@ -82,6 +86,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.5'
 
       - name: Upload coverage report to codecov
         uses: codecov/codecov-action@v2
