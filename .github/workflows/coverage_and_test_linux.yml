@@ -98,9 +98,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: proximity_client/coverage/lcov.info
-
-    
-
     
 
   # Job 5: Build Android APK
@@ -118,7 +115,8 @@ jobs:
           flutter-version: '3.19.5'
       - run: flutter pub get
       - run: flutter clean
-      - run: flutter build apk
+      - run: cd proximity_client/lib &&
+          flutter build apk
 
   # Job 6: Deploy Android APK
   deploy_android:
