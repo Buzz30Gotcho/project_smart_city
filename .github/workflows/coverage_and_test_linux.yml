@@ -118,7 +118,8 @@ jobs:
           flutter-version: '3.19.5'
       - run: flutter pub get
       - run: flutter clean
-      - run: flutter build apk
+      - run: cd cd proximity_client/lib 
+          flutter build apk
 
   # Job 6: Deploy Android APK
   deploy_android:
