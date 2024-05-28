@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 import 'package:proximity/proximity.dart';
 
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:proximity_commercant/domain/store_repository/store_repository.dart';
 
 class StoreRayonSelectionWidget extends StatefulWidget {

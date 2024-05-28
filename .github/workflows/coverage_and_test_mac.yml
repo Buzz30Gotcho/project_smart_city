@@ -44,32 +44,21 @@ jobs:
           file: ./coverage/lcov.cleaned.info
 
 
-  # Stage: Lint Fix
-  lint_fix_flutter_code:
-    name: Lint Fix Flutter Code
-    runs-on: macos-latest
+  # Job 5: Build Android APK
+  build_ios:
+    name: Build Flutter (ios)
     needs: [coverage_flutter_test]
-
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.5'
-
-      - name: Get Flutter dependencies
-        run: flutter pub get
-
-      - name: Run Flutter fix --dry-run
-        run: |
-          cd proximity_client
-          dart fix --dry-run
-
-      - name: Run Flutter fix --apply
-        run: |
-          cd proximity_client
-          dart fix --apply
+      - run: flutter pub get
+      - run: flutter clean
+      - run: flutter build ios
 
 

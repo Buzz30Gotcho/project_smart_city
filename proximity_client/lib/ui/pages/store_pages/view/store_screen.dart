@@ -370,6 +370,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                                             .policy!
                                                             .returnPolicy!
                                                             .refund
+                                                            // ignore: unnecessary_null_comparison
                                                             .order ==
                                                         null
                                                 ? PolicyCard(
@@ -477,3 +478,7 @@ class _StoreScreenState extends State<StoreScreen> {
     return false;
   }
 }
+
+
+
+
