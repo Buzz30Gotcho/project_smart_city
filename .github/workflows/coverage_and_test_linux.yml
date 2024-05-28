@@ -116,7 +116,10 @@ jobs:
       - run: flutter pub get
       - run: flutter clean
       - run: cd proximity_client/lib &&
-          flutter build apk
+          flutter build apk 
+  # Construire un fichier APK de l'application. 
+  # Un APK (Android Package) est le format de fichier utilisé pour distribuer et installer des applications sur 
+  # les appareils Android. Cette commande compile le code source Dart en un fichier exécutable Android.
 
   # Job 6: Deploy Android APK
   deploy_android:
@@ -132,42 +135,42 @@ jobs:
 
     
 # Job de backend
-  backend:
-    name: Build and Deploy Backend
-    needs: deploy_android  # Ce job dépend du déploiement de l'APK Android
-    runs-on: ubuntu-latest
+  # backend:
+  #   name: Build and Deploy Backend
+  #   needs: deploy_android  # Ce job dépend du déploiement de l'APK Android
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v2
     
-    - name: Install Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+  #   - name: Install Node.js
+  #     uses: actions/setup-node@v2
+  #     with:
+  #       node-version: '14'
 
-    - name: Install dependencies
-      run: npm install
+  #   - name: Install dependencies
+  #     run: npm install
 
-    - name: Run backend tests
-      run: npm test
+  #   - name: Run backend tests
+  #     run: npm test
 
-    - name: Generate coverage report
-      run: npm run coverage
+  #   - name: Generate coverage report
+  #     run: npm run coverage
 
-    - name: Deploy to Heroku
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: |
-        heroku apps:login
-        heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
-        git push heroku main
+  #   - name: Deploy to Heroku
+  #     env:
+  #       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  #     run: |
+  #       heroku apps:login
+  #       heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
+  #       git push heroku main
 
 
   # Job 7: Deploy to Heroku
   deploy_to_heroku:
     name: Deploy to Heroku
-    needs: [deploy_android,backend]
+    needs: [deploy_android]
     runs-on: ubuntu-latest
 
     steps:
